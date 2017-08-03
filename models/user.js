@@ -16,21 +16,6 @@ var userSchema = new Schema({
 
 userSchema.pre('save', function(next) {
 	var user = this;
-	mongoose.model('User').findOne({email: user.email}, function (err, result) {
-		if(err) {
-			return next(err);
-		}
-		if(result) {
-			user.invalidate("email", "Email Must Be Unique");
-
-			return next(new Error("Email Must Be Unique"));
-		}
-		next();
-	});
-});
-
-userSchema.pre('save', function(next) {
-	var user = this;
 
 	if(user.isModified("password")) {
 		bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
@@ -49,7 +34,22 @@ userSchema.pre('save', function(next) {
 	next();
 });
 
-userSchema.method.checkPassword = function(guess, next) {
+userSchema.pre('save', function(next) {
+	var user = this;
+	mongoose.model('User').findOne({email: user.email}, function (err, result) {
+		if(err) {
+			return next(err);
+		}
+		if(user.isNew && result) {
+			user.invalidate("email", "Email Must Be Unique");
+
+			return next(new Error("Email Must Be Unique"));
+		}
+		next();
+	});
+});
+
+userSchema.methods.checkPassword = function(guess, next) {
 	bcrypt.compare(guess, this.password, function(err, isMatch) {
 		if (err) {
 			return next(err);

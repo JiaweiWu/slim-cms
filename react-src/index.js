@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware} from 'redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ReduxThunk from 'redux-thunk';
+import { Row } from 'react-bootstrap';
 
 import reducers from "./reducers";
 import App from './components/App';
-import Sidebar from './components/Sidebar';
+import Bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
@@ -16,8 +17,7 @@ const RenderApp = ()  => {
 		<Provider store={store}>
 			<BrowserRouter>
 				<div>
-					<Sidebar />
-					<Route path="/" component={App} />
+					<App />
 				</div>
 			</BrowserRouter>
 		</Provider>

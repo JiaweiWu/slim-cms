@@ -31,8 +31,30 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(passport.initialize());
+app.use(express.static(path.resolve(__dirname, "react-build")));
 
-app.use("/api", apiRouter);
+app.get("*", function(req, res) {
+	res.sendFile(path.resolve(__dirname, "react-build", "index.html"));
+});
+
+app.use("/api-v1", apiRouter);
+
+// if(app.get("env") === "development") {
+// 	app.use(function(err, req, res, next) {
+// 		res.status(500).send({
+// 		status: 500,
+// 		message: "Internal Error", 
+// 		type: "Internal"
+// 		});
+// 	});
+// }
+
+// app.use(function(err, req, res, next) {
+// 	console.error(err);
+// 	res.status(500).send({
+// 		message: err.message
+// 	});
+// });
 
 //Server
 var port = process.env.port || 3090;

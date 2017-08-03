@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import { Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
 	constructor(props) {
@@ -9,7 +11,12 @@ class Sidebar extends Component {
 	render() {
 		return(
 			<div>
-				Hello Sidebar
+				<ListGroup>
+					<ListGroupItem><Link to="/dashboard">Dashboard</Link></ListGroupItem>
+					<ListGroupItem><Link to="/posts">Posts</Link></ListGroupItem>
+					<ListGroupItem><Link to="/comments">Comments</Link></ListGroupItem>
+					<ListGroupItem><Link to="/settings">Settings</Link></ListGroupItem>
+				</ListGroup>
 			</div>
 		);
 	}

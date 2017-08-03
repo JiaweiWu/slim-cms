@@ -27,7 +27,8 @@ function signup(req, res, next) {
 	var newUser = new User({
 		username: username,
 		email: email,
-		password: password
+		password: password,
+		posts: []
 	});
 
 	newUser.save(function(err) {

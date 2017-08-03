@@ -10,7 +10,8 @@ var postSchema = new Schema({
 	date: { type: Date, default: Date.now},
 	author: { 
 		type: Schema.Types.ObjectId,
-		ref: "User" 
+		ref: "User",
+		required: true 
 	},
 });
 
