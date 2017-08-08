@@ -1,6 +1,6 @@
 import { SIGNIN, SIGNUP } from "../actions/index";
 
-const INITIAL_STATE = { authStatus: true, authMessage: "Not Signed In", jwt: "" };
+const INITIAL_STATE = { authStatus: false, authMessage: "Not Signed In", jwt: "" };
 
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type) {

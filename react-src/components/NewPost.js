@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { bindActionCreators } from 'redux';
+import { addNewPost } from '../actions/index';
 
 class NewPost extends Component {
 	constructor(props) {
@@ -20,6 +22,8 @@ class NewPost extends Component {
 	}
 
 	handleButtonClick() {
+		console.log("Button Pressed");
+		addNewPost()
 	}
 
 	render() {

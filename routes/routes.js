@@ -7,10 +7,13 @@ var api = express.Router();
 var jwtAuth = passport.authenticate('jwt', { session: false });
 var localAuth = passport.authenticate('local', { session: false });
 
-api.post("/signin", localAuth, UserController.signin);
-api.post("/signup", UserController.signup);
+api.post("/users/signin", localAuth, UserController.signin);
+api.post("/users/signup", UserController.signup);
 
-api.post("/newpost", PostsController.newPost);
-api.post("/deletepost", PostsController.deletePost);
+api.post("/post", jwtAuth, PostsController.newPost);
+api.delete("/post", PostsController.deletePost);
+api.get("/posts", function(req, res) {
+	res.status(200).send("Placeholder");
+})
 
 module.exports = api;

@@ -4,19 +4,12 @@ var jwt = require('jsonwebtoken');
 var config = require('../config');
 
 function newPost(req, res, next) {
-	var token = req.body.token;
-	var userId;
-	try {
-		userId = jwt.verify(token, config.secret);
-	} catch(err) {
-		return next(err);
-	}
-
 	var title = req.body.title;
 	var description = req.body.description;
 	var content = req.body.content;
+	var userId = req.body.userId;
 
-	User.findById({ _id: userId.sub }, function(err, result) {
+	User.findById({ _id: userId }, function(err, result) {
 		if(err) {
 			return next(err);
 		}
@@ -37,10 +30,12 @@ function newPost(req, res, next) {
 				if(err) {
 					return next(err);
 				}
+				return res.status(201).send("Post Successfully Added");
 			});
 		});
 	});
-	res.status(201).send("Post Successfully Added");
+	
+	res.status(404).send("Failed to Add New Post");
 }
 
 function deletePost(req, res, next) {
